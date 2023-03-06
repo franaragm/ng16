@@ -6,12 +6,9 @@ export type Exception = {
   timestamp: Date;
 };
 
-export const EXCEPTION_STORE = new InjectionToken<
-  SettableSignal<Exception | null>
->('EXCEPTION_STORE', {
-  providedIn: 'root',
-  factory: () => {
-    console.log('EXCEPTION_STORE factory');
-    return signal<Exception | null>(null);
-  },
-});
+export const EXCEPTION_STORE
+  = new InjectionToken<SettableSignal<Exception | null>>(
+    'EXCEPTION_STORE', {
+      providedIn: 'root',
+      factory: () => signal<Exception | null>(null),
+    });
