@@ -22,6 +22,10 @@ import { EXCEPTION_SIGNAL } from './exception.signal';
     <br />
     <button (click)="onClickPromiseError()">👿 Throw a Promise error!</button>
     <br />
+    <button (click)="onClickDelayedError()">
+      👹 Throw a Time delayed error!
+    </button>
+    <br />
     <div *ngIf="data()">
       <p>📦 Got data:</p>
       <pre>{{ data() | json }}</pre>
@@ -84,5 +88,11 @@ export class AppComponent {
   onClickPromiseError() {
     // ❌ Promises errors are not received correctly
     Promise.reject(new Error('Test promise rejected error'));
+  }
+  onClickDelayedError() {
+    // ❌ Delayed errors are not received correctly
+    setTimeout(() => {
+      throw new Error('Test delayed error');
+    }, 1000);
   }
 }
