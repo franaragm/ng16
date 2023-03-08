@@ -10,8 +10,6 @@ import { EXCEPTION_SIGNAL } from './exception.signal';
     <h1>Angular 16 Signals sandbox</h1>
     <button (click)="onClickRequest()">👼🏼 Send a request!</button>
     <br />
-    <button (click)="onClickError()">😈 Throw an Application error!</button>
-    <br />
     <button (click)="onClickBadRequestHandled()">
       🥳 Send a handled bad request
     </button>
@@ -19,6 +17,10 @@ import { EXCEPTION_SIGNAL } from './exception.signal';
     <button (click)="onClickBadRequest()">
       🤯 Send an unhandled bad request
     </button>
+    <br />
+    <button (click)="onClickError()">🤬 Throw an Application error!</button>
+    <br />
+    <button (click)="onClickPromiseError()">👿 Throw a Promise error!</button>
     <br />
     <div *ngIf="data()">
       <p>📦 Got data:</p>
@@ -55,6 +57,7 @@ export class AppComponent {
   onClickBadRequest() {
     // ✅ HTTP errors intercepted are emitted and received as signals
     // ❌ HTTP errors catch by ErrorHandler are not received correctly
+    // 🕳️ Deactivate interceptors at main.ts to see it more clearly
     this.#http
       .get('https://jsonplaceholder.typicode.com/comments/666')
       .subscribe((data) => this.data.set(data));
@@ -75,6 +78,10 @@ export class AppComponent {
   }
   onClickError() {
     // ✅ Errors catch by errorhandler are emitted and received as signals
-    throw new Error('Test error');
+    throw new Error('Test common error');
+  }
+  onClickPromiseError() {
+    // ❌ Promises errors are not received correctly
+    Promise.reject(new Error('Test promise rejected error'));
   }
 }
