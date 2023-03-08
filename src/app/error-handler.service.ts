@@ -1,6 +1,5 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandler, inject } from '@angular/core';
-import { Exception, EXCEPTION_SIGNAL } from './exception.store';
+import { Exception, EXCEPTION_SIGNAL } from './exception.signal';
 
 export class ErrorHandlerService implements ErrorHandler {
   #exceptionSignal = inject(EXCEPTION_SIGNAL);
@@ -8,16 +7,11 @@ export class ErrorHandlerService implements ErrorHandler {
   handleError(error: any): void {
     const exception: Exception = {
       message: error.message || 'Unknown error',
-      category: 'Unknown',
-      timestamp: new Date(),
+      category: 'Unhandled',
+      timestamp: new Date().getUTCMilliseconds(),
     };
-    if (error instanceof HttpErrorResponse) {
-      exception.category = 'HTTP';
-    } else if (error instanceof Error) {
-      exception.category = 'Application';
-    }
     console.log(
-      '📡 exception signal:',
+      '📡 emitting unhandled exception signal:',
       exception.category + ':',
       exception.timestamp
     );

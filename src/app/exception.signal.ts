@@ -3,7 +3,7 @@ import { InjectionToken, SettableSignal, signal } from '@angular/core';
 export type Exception = {
   message: string;
   category: string;
-  timestamp: Date;
+  timestamp: number;
 };
 
 export const EXCEPTION_SIGNAL = new InjectionToken<
