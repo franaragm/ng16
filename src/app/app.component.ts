@@ -29,6 +29,7 @@ import { EXCEPTION_SIGNAL } from './exception.signal';
     <div *ngIf="exception() as exception">
       <p>💣 Got an exception:</p>
       <pre>{{ exception | json }}</pre>
+      <small>Check milliseconds on console</small>
     </div>
   `,
 })
