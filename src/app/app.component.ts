@@ -15,6 +15,7 @@ import { EXCEPTION_SIGNAL } from './exception.signal';
   template: `
     <h1>Angular 16 Signals sandbox</h1>
     <i>Check millisecond incoherences on async unhandled errors at console</i>
+    <br />
     <button (click)="onClickRequest()">👼🏼 Send a good request!</button>
     <br />
     <button (click)="onClickBadRequestHandled()">
