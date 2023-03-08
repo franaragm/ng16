@@ -1,6 +1,12 @@
 import { JsonPipe, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { EXCEPTION_SIGNAL } from './exception.signal';
 @Component({
   selector: 'ng-root',
@@ -39,6 +45,7 @@ import { EXCEPTION_SIGNAL } from './exception.signal';
 })
 export class AppComponent {
   #http = inject(HttpClient);
+  #cdr = inject(ChangeDetectorRef);
   exception = inject(EXCEPTION_SIGNAL);
   data = signal<object | null>(null);
 
@@ -48,8 +55,11 @@ export class AppComponent {
       if (data) console.warn('📡 received data signal:', data);
       else console.log('🕳️ no data signal');
       const exception = this.exception();
-      if (exception) console.warn('📡 received exception signal:', exception);
-      else console.log('🕳️ no exception signal');
+      if (exception) {
+        console.warn('📡 received exception signal:', exception);
+        // 🔬 The cdr resolves the timeout error, but not the promise error
+        this.#cdr.detectChanges();
+      } else console.log('🕳️ no exception signal');
     });
   }
 
