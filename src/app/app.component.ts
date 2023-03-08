@@ -14,7 +14,8 @@ import { EXCEPTION_SIGNAL } from './exception.signal';
   imports: [NgIf, JsonPipe],
   template: `
     <h1>Angular 16 Signals sandbox</h1>
-    <button (click)="onClickRequest()">👼🏼 Send a request!</button>
+    <i>Check millisecond incoherences on async unhandled errors at console</i>
+    <button (click)="onClickRequest()">👼🏼 Send a good request!</button>
     <br />
     <button (click)="onClickBadRequestHandled()">
       🥳 Send a handled bad request
@@ -24,12 +25,16 @@ import { EXCEPTION_SIGNAL } from './exception.signal';
       🤯 Send an unhandled bad request
     </button>
     <br />
-    <button (click)="onClickError()">🤬 Throw an Application error!</button>
-    <br />
-    <button (click)="onClickPromiseError()">👿 Throw a Promise error!</button>
+    <button (click)="onClickError()">
+      🤬 Throw an common application error!
+    </button>
     <br />
     <button (click)="onClickDelayedError()">
-      👹 Throw a Time delayed error!
+      👹 Throw a Time delayed (async) error!
+    </button>
+    <br />
+    <button (click)="onClickPromiseError()">
+      👿 Throw a Promise rejection error!
     </button>
     <br />
     <div *ngIf="data()">
@@ -39,13 +44,12 @@ import { EXCEPTION_SIGNAL } from './exception.signal';
     <div *ngIf="exception() as exception">
       <p>💣 Got an exception:</p>
       <pre>{{ exception | json }}</pre>
-      <small>Check milliseconds on console</small>
     </div>
   `,
 })
 export class AppComponent {
   #http = inject(HttpClient);
-  #cdr = inject(ChangeDetectorRef);
+  #cdr = inject(ChangeDetectorRef); // hack to force cd on async errors
   exception = inject(EXCEPTION_SIGNAL);
   data = signal<object | null>(null);
 
@@ -92,17 +96,17 @@ export class AppComponent {
       });
   }
   onClickError() {
-    // ✅ Errors catch by errorhandler are emitted and received as signals
+    // ✅ Errors catch by ErrorHandler are emitted and received as signals too.
     throw new Error('Test common error');
+  }
+  onClickDelayedError() {
+    // ⚠️ Delayed errors are not received correctly (except whe using the CDR)
+    setTimeout(() => {
+      throw new Error('Test delayed error');
+    }, 1000);
   }
   onClickPromiseError() {
     // ❌ Promises errors are not received correctly
     Promise.reject(new Error('Test promise rejected error'));
-  }
-  onClickDelayedError() {
-    // ❌ Delayed errors are not received correctly
-    setTimeout(() => {
-      throw new Error('Test delayed error');
-    }, 1000);
   }
 }
