@@ -1,3 +1,4 @@
+import { provideHttpClient } from '@angular/common/http';
 import { ErrorHandler } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
@@ -9,5 +10,6 @@ bootstrapApplication(AppComponent, {
       provide: ErrorHandler,
       useClass: ErrorHandlerService,
     },
+    provideHttpClient(),
   ],
 }).catch((err) => console.error(err));
