@@ -12,6 +12,10 @@ export type Auth = {
   token: string;
 };
 
+/**
+ * Auth Signal Store
+ * @description A simple store for auth state
+ */
 @Injectable({ providedIn: 'root' })
 export class AuthSignalStore {
   // private signal state

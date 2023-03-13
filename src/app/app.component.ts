@@ -50,7 +50,7 @@ import { EXCEPTION_SIGNAL } from './exception.signal';
 })
 export class AppComponent {
   #http = inject(HttpClient);
-  #cdr = inject(ChangeDetectorRef); // hack to force cd on async errors
+  #cdr = inject(ChangeDetectorRef); // hack to force c.d. on async errors
   exception = inject(EXCEPTION_SIGNAL);
   data = signal<object | null>(null);
 
