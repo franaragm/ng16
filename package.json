@@ -1,22 +1,18 @@
 {
   "name": "ng16",
   "version": "16.0.0",
-    "description": "Angular 16",
+  "description": "Angular 16",
   "author": {
     "name": "Alberto Basalo",
     "email": "albertobasalo@hotmail.com",
     "url": "https://albertobasalo.dev"
   },
+  "scripts": {
     "ng": "ng",
     "start": "ng serve --disable-host-check",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
-  },
-  "author": {
-    "name": "Alberto Basalo",
-    "email": "albertobasalo@hotmail.com",
-    "url": "https://albertobasalo.dev"
   },
   "private": true,
   "dependencies": {
