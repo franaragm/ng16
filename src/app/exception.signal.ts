@@ -1,4 +1,4 @@
-import { InjectionToken, SettableSignal, signal } from '@angular/core';
+import { InjectionToken, WritableSignal, signal } from '@angular/core';
 
 /**
  * Exception data
@@ -12,7 +12,7 @@ export type Exception = {
 /**
  * Exception Signal (nullable for easy initializing or resetting)
  */
-type ExceptionSignal = SettableSignal<Exception | null>;
+type ExceptionSignal = WritableSignal<Exception | null>;
 
 /**
  * Exception Signal provided as an injectable token
