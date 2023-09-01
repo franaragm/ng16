@@ -1,8 +1,8 @@
 import {
-  computed,
   Injectable,
-  SettableSignal,
   Signal,
+  WritableSignal,
+  computed,
   signal,
 } from '@angular/core';
 
@@ -20,7 +20,7 @@ export type Auth = {
 export class AuthSignalStore {
   // private signal state
   #initialData: Auth = { id: '', email: '', token: '' };
-  #user: SettableSignal<Auth> = signal<Auth>(this.#initialData);
+  #user: WritableSignal<Auth> = signal<Auth>(this.#initialData);
   // public readonly data signal
   auth: Signal<Auth> = computed(() => this.#user());
   // logical computed signals
